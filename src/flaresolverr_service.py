@@ -249,9 +249,10 @@ def _resolve_challenge(req: V1RequestBase, method: str) -> ChallengeResolutionT:
             logging.debug('A used instance of webdriver has been destroyed')
 
 
-def click_verify(driver: WebDriver):
+def click_verify(driver: WebDriver, attempt: int):
     try:
         logging.debug("Try to find the Cloudflare verify checkbox...")
+        driver.save_screenshot(f"/screenshot_att_{attempt}_1_verify.png")
         iframe = driver.find_element(By.XPATH, "//iframe[starts-with(@id, 'cf-chl-widget-')]")
         driver.switch_to.frame(iframe)
         checkbox = driver.find_element(
@@ -271,6 +272,7 @@ def click_verify(driver: WebDriver):
 
     try:
         logging.debug("Try to find the Cloudflare 'Verify you are human' button...")
+        driver.save_screenshot(f"/screenshot_att_{attempt}_2_human.png")
         button = driver.find_element(
             by=By.XPATH,
             value="//input[@type='button' and @value='Verify you are human']",
@@ -333,6 +335,7 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
     # wait for the page
     if utils.get_config_log_html():
         logging.debug(f"Response HTML:\n{driver.page_source}")
+    driver.save_screenshot("/screenshot_att_0.png")
     html_element = driver.find_element(By.TAG_NAME, "html")
     page_title = driver.title
 
@@ -388,9 +391,12 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
             except TimeoutException:
                 logging.debug("Timeout waiting for selector")
 
-                click_verify(driver)
+                driver.save_screenshot(f"/screenshot_att_{attempt}_0_before.png")
+
+                click_verify(driver, attempt)
 
                 # update the html (cloudflare reloads the page every 5 s)
+                driver.save_screenshot(f"/screenshot_att_{attempt}_3_after.png")
                 html_element = driver.find_element(By.TAG_NAME, "html")
 
         # waits until cloudflare redirection ends
