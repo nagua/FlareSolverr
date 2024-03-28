@@ -1,24 +1,25 @@
+from typing import Optional
 
 STATUS_OK = "ok"
 STATUS_ERROR = "error"
 
 
 class ChallengeResolutionResultT:
-    url: str = None
-    status: int = None
-    headers: list = None
-    response: str = None
-    cookies: list = None
-    userAgent: str = None
+    url: Optional[str] = None
+    status: Optional[int] = None
+    headers: Optional[list] = None
+    response: Optional[str] = None
+    cookies: Optional[list] = None
+    userAgent: Optional[str] = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
 
 
 class ChallengeResolutionT:
-    status: str = None
-    message: str = None
-    result: ChallengeResolutionResultT = None
+    status: Optional[str] = None
+    message: Optional[str] = None
+    result: Optional[ChallengeResolutionResultT] = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
@@ -28,21 +29,24 @@ class ChallengeResolutionT:
 
 class V1RequestBase(object):
     # V1RequestBase
-    cmd: str = None
-    cookies: list = None
-    maxTimeout: int = None
-    proxy: dict = None
-    session: str = None
-    session_ttl_minutes: int = None
-    headers: list = None  # deprecated v2.0.0, not used
-    userAgent: str = None  # deprecated v2.0.0, not used
+    cmd: Optional[str] = None
+    cookies: Optional[list] = None
+    maxTimeout: Optional[int] = None
+    proxy: Optional[dict] = None
+    session: Optional[str] = None
+    session_ttl_minutes: Optional[int] = None
+    headers: Optional[list] = None  # deprecated v2.0.0, not used
+    userAgent: Optional[str] = None  # deprecated v2.0.0, not used
 
     # V1Request
-    url: str = None
-    postData: str = None
-    returnOnlyCookies: bool = None
-    download: bool = None   # deprecated v2.0.0, not used
-    returnRawHtml: bool = None  # deprecated v2.0.0, not used
+    url: Optional[str] = None
+    postData: Optional[str] = None
+    returnOnlyCookies: Optional[bool] = None
+    download: Optional[bool] = None   # deprecated v2.0.0, not used
+    returnRawHtml: Optional[bool] = None  # deprecated v2.0.0, not used
+
+    # Additional
+    shortWaitTimeout: Optional[int] = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
@@ -50,16 +54,16 @@ class V1RequestBase(object):
 
 class V1ResponseBase(object):
     # V1ResponseBase
-    status: str = None
-    message: str = None
-    session: str = None
-    sessions: list[str] = None
-    startTimestamp: int = None
-    endTimestamp: int = None
-    version: str = None
+    status: Optional[str] = None
+    message: Optional[str] = None
+    session: Optional[str] = None
+    sessions: Optional[list[str]] = None
+    startTimestamp: Optional[int] = None
+    endTimestamp: Optional[int] = None
+    version: Optional[str] = None
 
     # V1ResponseSolution
-    solution: ChallengeResolutionResultT = None
+    solution: Optional[ChallengeResolutionResultT] = None
 
     # hidden vars
     __error_500__: bool = False
@@ -71,16 +75,16 @@ class V1ResponseBase(object):
 
 
 class IndexResponse(object):
-    msg: str = None
-    version: str = None
-    userAgent: str = None
+    msg: Optional[str] = None
+    version: Optional[str] = None
+    userAgent: Optional[str] = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
 
 
 class HealthResponse(object):
-    status: str = None
+    status: Optional[str] = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
